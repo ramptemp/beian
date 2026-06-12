@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  ai-campus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-campus
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/app/data
+      - ./public/uploads:/app/public/uploads
+    environment:
+      - NODE_ENV=production
+      - DATABASE_PATH=/app/data/database.sqlite
+      - JWT_SECRET=ai-campus-local-secret-key-2026
+    networks:
+      - ai-campus-network
+
+networks:
+  ai-campus-network:
+    driver: bridge
+    internal: false
